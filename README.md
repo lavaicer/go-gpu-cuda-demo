@@ -125,7 +125,10 @@ struct device_builtin cudaDeviceProp {
 
 Refer:
 
-https://blog.csdn.net/gggg_ggg/article/details/48130615
-https://hackernoon.com/no-stress-cuda-programming-using-go-and-c-fy1y3agf
-https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B
-https://zh.wikipedia.org/wiki/%E7%BA%BF%E7%A8%8B
+> https://blog.csdn.net/gggg_ggg/article/details/48130615
+>
+> > https://hackernoon.com/no-stress-cuda-programming-using-go-and-c-fy1y3agf
+>
+> > https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B
+>
+> > https://zh.wikipedia.org/wiki/%E7%BA%BF%E7%A8%8B

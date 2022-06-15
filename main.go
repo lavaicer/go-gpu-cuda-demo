@@ -80,7 +80,7 @@ func calcTime() {
 	cpu_matrix1 := genMatrix(size)
 	cpu_matrix2 := genMatrix(size)
 	// CPU
-	runtime.GOMAXPROCS(1)
+	runtime.GOMAXPROCS(runtime.NumCPU())
 	go func() {
 		CPU(cpu_matrix1, cpu_matrix2)
 		println("CPU :", cpu_time[len(cpu_time)-1])

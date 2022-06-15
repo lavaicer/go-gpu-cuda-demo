@@ -22,11 +22,23 @@ __global__ void vecmul(float *A, float *B, float *C, int size)
 extern "C"
 {
 
+    int getThreadNum()
+    {
+        cudaDeviceProp prop;
+        cudaGetDeviceProperties(&prop, 0);
+        // printf("max thread num: %d\n", prop.maxThreadsPerBlock);
+        // printf("max grid dimensions: %d, %d, %d)\n",
+        //        prop.maxGridSize[0], prop.maxGridSize[1], prop.maxGridSize[2]);
+        return prop.maxThreadsPerBlock;
+    }
+
     void maxmul(float *A, float *B, float *C, int size)
     {
 
+        int threadNum = getThreadNum();
+        int blockNum = (size * size - 0.5) / threadNum + 1;
+
         int total = size * size;
-        int size_in, blockSize;
         // Allocate device memory:
         float *gpu_A;
         float *gpu_B;
@@ -39,14 +51,9 @@ extern "C"
         cudaMalloc((void **)&gpu_C, msize);
 
         // Blocks & grids:
-        (size <= 512) ?: blockSize = 1;
-        blockSize = size / 512 + 1;
 
-        (size % 512 != 0 && size > 512) ?: size_in = 512;
-        size_in = size;
-
-        dim3 blocks(size_in, size_in);
-        dim3 grid(blockIdx, blockIdx);
+        dim3 blocks(threadNum, threadNum);
+        dim3 grid(blockNum, blockNum);
 
         // Call the kernel:
         vecmul<<<grid, blocks>>>(gpu_A, gpu_B, gpu_C, size);
